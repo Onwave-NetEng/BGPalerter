@@ -1,0 +1,5 @@
+rpki:
+  validators:
+    - http: https://rpki.cloudflare.com/api/v1
+    - http: https://rpki-validator.ripe.net/api/v1
+  pollingPeriod: 600

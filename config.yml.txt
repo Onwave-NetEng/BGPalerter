@@ -1,0 +1,40 @@
+cat > config/config.yml << 'EOF'
+environment: production
+
+monitoring:
+  rpki:
+    enabled: true
+    file: rpki.yml
+
+  statics:
+    enabled: true
+    file: prefixes.yml
+
+  upstreams:
+    enabled: true
+
+  asns:
+    enabled: true
+    file: groups.yml
+
+  hijacks:
+    enabled: true
+
+  bogons:
+    enabled: true
+
+notifications:
+  enabled: false
+  file: subs.yml
+
+monitorASns:
+  58173:
+    group: Onwave
+  174:
+    group: Onwave
+  6762:
+    group: Onwave
+
+reporting:
+  outputLogs: true
+EOF
