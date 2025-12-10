@@ -1,0 +1,16 @@
+cat > docker-compose.yml << 'EOF'
+version: "3.8"
+
+services:
+  bgpalerter:
+    image: nttgin/bgpalerter:latest
+    container_name: bgpalerter
+    restart: unless-stopped
+    volumes:
+      - ./config:/opt/bgpalerter/config
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"
+EOF
