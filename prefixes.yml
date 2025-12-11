@@ -1,4 +1,6 @@
 cat > config/prefixes.yml << 'EOF'
+prefixes:
+cat > config/prefixes.yml << 'EOF'
 - prefix: 134.0.80.0/21
   description: Onwave UK Ltd
   originAS: 58173
