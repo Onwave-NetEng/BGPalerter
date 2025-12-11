@@ -1,8 +1,7 @@
 groups:
-  Onwave:
-    name: "Onwave Networks"
-    description: "All monitored ASNs related to Onwave"
-    asns:
+  - name: Onwave
+    members:
       - 58173
       - 174
       - 6762
+
