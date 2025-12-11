@@ -1,60 +1,23 @@
 cat > config/config.yml << 'EOF'
-# core environment
 environment: production
 
-# list of statics/prefix files
-monitoredPrefixesFiles:
-  - prefixes.yml
-
-# connectors/peers (default; leave as example unless you change)
-connectors:
-  ris:
+monitors:
+  rpki:
     enabled: true
+    file: rpki.yml
 
-# Reports / Reporting modules
-reports:
-  - file: reportLog   # write alerts to log (always useful)
-    channels:
-      - hijack
-      - newprefix
-      - visibility
-  - file: reportEmail
-    channels:
-      - hijack
-      - newprefix
-      - visibility
-    params:
-      senderEmail: "bgpalerter@onwave.com"
-      smtp:
-        host: "onwave-com.mail.protection.outlook.com"
-        port: 25
-        secure: false
-        # anonymous SMTP allowed by your inbound connector; keep auth empty
-        auth:
-          user: ""
-          pass: ""
-      # set recipients here
-      notifiedEmails:
-        default:
-          - "net-eng@onwave.com"
+  statics:
+    enabled: true
+    file: prefixes.yml
 
-# Monitoring options & advanced (kept conservative; mirrors example layout)
-advanced:
-  thresholdMinPeers: 3
+  groups:
+    enabled: true
+    file: groups.yml
 
-# Monitoring modules & files
-statics:
-  prefixesFile: prefixes.yml
+notifications:
+  enabled: false
+  file: subs.yml
 
-rpki:
-  file: rpki.yml
+logging:
+  outputLogs: true
 
-# keep these options consistent with examples
-alertOnlyOnce: false
-fadeOffSeconds: 360
-checkFadeOffGroupsSeconds: 30
-pidFile: bgpalerter.pid
-maxMessagesPerSecond: 6000
-multiProcess: false
-
-EOF
