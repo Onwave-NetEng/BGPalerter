@@ -1,40 +1,60 @@
 cat > config/config.yml << 'EOF'
+# core environment
 environment: production
 
-monitoring:
-  rpki:
-    enabled: true
-    file: rpki.yml
+# list of statics/prefix files
+monitoredPrefixesFiles:
+  - prefixes.yml
 
-  statics:
-    enabled: true
-    file: prefixes.yml
-
-  upstreams:
+# connectors/peers (default; leave as example unless you change)
+connectors:
+  ris:
     enabled: true
 
-  asns:
-    enabled: true
-    file: groups.yml
+# Reports / Reporting modules
+reports:
+  - file: reportLog   # write alerts to log (always useful)
+    channels:
+      - hijack
+      - newprefix
+      - visibility
+  - file: reportEmail
+    channels:
+      - hijack
+      - newprefix
+      - visibility
+    params:
+      senderEmail: "bgpalerter@onwave.com"
+      smtp:
+        host: "onwave-com.mail.protection.outlook.com"
+        port: 25
+        secure: false
+        # anonymous SMTP allowed by your inbound connector; keep auth empty
+        auth:
+          user: ""
+          pass: ""
+      # set recipients here
+      notifiedEmails:
+        default:
+          - "net-eng@onwave.com"
 
-  hijacks:
-    enabled: true
+# Monitoring options & advanced (kept conservative; mirrors example layout)
+advanced:
+  thresholdMinPeers: 3
 
-  bogons:
-    enabled: true
+# Monitoring modules & files
+statics:
+  prefixesFile: prefixes.yml
 
-notifications:
-  enabled: false
-  file: subs.yml
+rpki:
+  file: rpki.yml
 
-monitorASns:
-  58173:
-    group: Onwave
-  174:
-    group: Onwave
-  6762:
-    group: Onwave
+# keep these options consistent with examples
+alertOnlyOnce: false
+fadeOffSeconds: 360
+checkFadeOffGroupsSeconds: 30
+pidFile: bgpalerter.pid
+maxMessagesPerSecond: 6000
+multiProcess: false
 
-reporting:
-  outputLogs: true
 EOF
