@@ -1,15 +1,16 @@
 services:
   bgpalerter:
-    image: bgpalerter/bgpalerter:2.0.1
+    image: nttgin/bgpalerter:2.0.1
     container_name: bgpalerter
     restart: always
     volumes:
-      - ./config:/opt/bgpalerter/config:rw
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10m"
-        max-file: "5"
+      - ./config/config.yml:/opt/bgpalerter/config.yml:ro
+      - ./config/prefixes.yml:/opt/bgpalerter/config/prefixes.yml:ro
+      - ./config/groups.yml:/opt/bgpalerter/config/groups.yml:ro
+      - ./config/rpki.yml:/opt/bgpalerter/config/rpki.yml:ro
+      - ./config/subs.yml:/opt/bgpalerter/config/subs.yml:ro
+      - ./logs:/opt/bgpalerter/logs
+
 
 
 
