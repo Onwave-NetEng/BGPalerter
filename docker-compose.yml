@@ -1,17 +1,17 @@
+version: "3.9"
+
 services:
   bgpalerter:
-    image: nttgin/bgpalerter:2.0.1
+    image: bgpalerter-local   # Use the local image built from the Dockerfile
     container_name: bgpalerter
     restart: always
     volumes:
-      - ./config/config.yml:/opt/bgpalerter/config.yml:ro
-      - ./config/prefixes.yml:/opt/bgpalerter/config/prefixes.yml:ro
-      - ./config/groups.yml:/opt/bgpalerter/config/groups.yml:ro
-      - ./config/rpki.yml:/opt/bgpalerter/config/rpki.yml:ro
-      - ./config/subs.yml:/opt/bgpalerter/config/subs.yml:ro
-      - ./logs:/opt/bgpalerter/logs
-
-
+      - ./config:/opt/bgpalerter/config:rw
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"
 
 
 
