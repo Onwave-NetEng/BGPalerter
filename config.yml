@@ -61,6 +61,12 @@ monitors:
       - route-views
       - ris
 
+logging:
+  directory: logs
+  level: info
+  console: true
+  json: false
+
 # Optional additional features
 features:
   as-path-prepend-detection: true
@@ -69,5 +75,6 @@ features:
   withdraw-detection: true
 
   refreshInterval: 300
+
 
 
