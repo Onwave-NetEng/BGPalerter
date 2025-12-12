@@ -1,6 +1,8 @@
+# BGPalerter 2.0.1 full config.yml
+
 environment: production
 
-monitoring:
+monitors:
   rpki:
     enabled: true
     file: rpki.yml
@@ -19,7 +21,26 @@ notifications:
 
 logging:
   outputLogs: true
-  directory: logs
+  directory: logs       # folder where logs will be written
+  level: info          # logging level: debug, info, warn, error
+  rotate: true         # enable log rotation
+  maxSize: 10M         # max log file size before rotation
+  maxFiles: 5          # max number of rotated log files to keep
+
+volume: /opt/bgpalerter  # optional, used internally by env.js
+
+# Optional advanced settings
+api:
+  enabled: false
+  host: 0.0.0.0
+  port: 8080
+
+worker:
+  concurrency: 4
+
+alerts:
+  throttle:
+    interval: 300       # seconds to wait before sending the same alert again
 
 
 
