@@ -1,7 +1,6 @@
-cat > config/config.yml << 'EOF'
 environment: production
 
-monitors:
+monitoring:
   rpki:
     enabled: true
     file: rpki.yml
@@ -20,6 +19,7 @@ notifications:
 
 logging:
   outputLogs: true
+
 
 
 
