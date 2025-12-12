@@ -19,6 +19,8 @@ notifications:
 
 logging:
   outputLogs: true
+  directory: logs
+
 
 
 
