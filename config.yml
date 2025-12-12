@@ -1,35 +1,37 @@
-environment: production
+# BGPalerter 2.0.1 full config.yml
 
-# Volume and logging configuration
-volume: /opt/bgpalerter
+# Global settings
 logging:
+  level: info
   directory: logs
-  outputLogs: true
-  rotate:
-    enabled: true
-    maxSize: 10MB
-    maxFiles: 5
 
-# Monitors
-monitors:
-  rpki:
-    enabled: true
-    file: rpki.yml
+volume: /opt/bgpalerter
 
-  statics:
-    enabled: true
-    monitoredPrefixesFiles:
-      - prefixes.yml
+# Monitors section must be an array
+monitors: []
 
-  groups:
-    enabled: true
-    file: groups.yml
+# Static prefixes monitoring
+statics:
+  enabled: true
+  monitoredPrefixesFiles:
+    - prefixes.yml
 
-# Notifications
-notifications:
-  enabled: false
-  file: subs.yml
+# RPKI validation
+rpki:
+  enabled: true
+  files:
+    - rpki.yml
+
+# Subscribers / alerts
+subs:
+  enabled: true
+  files:
+    - subs.yml
+
+# Optional: add more global settings here
+
 
 # Optional settings
 otherSettings:
   refreshInterval: 300
+
