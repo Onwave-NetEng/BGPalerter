@@ -2,8 +2,10 @@ services:
   bgpalerter:
     image: nttgin/bgpalerter:latest
     container_name: bgpalerter
-    restart: always        
+    restart: always     
+    image: bgpalerter/bgpalerter:2.0.1
     volumes:
+      - ./config:/opt/bgpalerter/config:rw
       - ./config/config.yml:/opt/bgpalerter/config.yml
       - ./config/prefixes.yml:/opt/bgpalerter/config/prefixes.yml
       - ./config/groups.yml:/opt/bgpalerter/config/groups.yml
@@ -14,6 +16,7 @@ services:
       options:
         max-size: "10m"
         max-file: "5"
+
 
 
 
