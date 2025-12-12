@@ -1,16 +1,18 @@
-cat > docker-compose.yml << 'EOF'
 version: "3.8"
 
 services:
   bgpalerter:
-    image: nttgin/bgpalerter:latest
+    image: simonebianchi/bgpalerter:latest
     container_name: bgpalerter
     restart: unless-stopped
+
     volumes:
-      - ./config:/opt/bgpalerter/config
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10m"
-        max-file: "5"
-EOF
+      - ./config/config.yml:/opt/bgpalerter/config.yml:ro
+      - ./config/prefixes.yml:/opt/bgpalerter/prefixes.yml:ro
+      - ./config/groups.yml:/opt/bgpalerter/groups.yml:ro
+      - ./config/rpki.yml:/opt/bgpalerter/rpki.yml:ro
+      - ./config/subs.yml:/opt/bgpalerter/subs.yml:ro
+
+    ports:
+      - "8010:8010"
+
