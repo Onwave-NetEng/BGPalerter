@@ -52,7 +52,7 @@ subscriptions:
 
 # Monitors
 monitors:
-  - type: BGPStream
+    type: BGPStream
     enabled: true
     peers:
       - routeviews
@@ -75,6 +75,7 @@ features:
   withdraw-detection: true
 
   refreshInterval: 300
+
 
 
 
