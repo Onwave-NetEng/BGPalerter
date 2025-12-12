@@ -1,15 +1,19 @@
 services:
   bgpalerter:
-    image: ntop/bgpalerter:latest
+    image: nttgin/bgpalerter:latest
     container_name: bgpalerter
+    restart: always        
     volumes:
       - ./config/config.yml:/opt/bgpalerter/config.yml
-      - ./config/prefixes.yml:/opt/bgpalerter/prefixes.yml
-      - ./config/groups.yml:/opt/bgpalerter/groups.yml
-      - ./config/rpki.yml:/opt/bgpalerter/rpki.yml
-      - ./config/subs.yml:/opt/bgpalerter/subs.yml
-      - ./logs:/opt/bgpalerter/logs
-    restart: unless-stopped
+      - ./config/prefixes.yml:/opt/bgpalerter/config/prefixes.yml
+      - ./config/groups.yml:/opt/bgpalerter/config/groups.yml
+      - ./config/rpki.yml:/opt/bgpalerter/config/rpki.yml
+      - ./config/subs.yml:/opt/bgpalerter/config/subs.yml
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"
 
 
 
