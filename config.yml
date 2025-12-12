@@ -1,37 +1,73 @@
-# BGPalerter 2.0.1 full config.yml
+# BGPalerter 2.0.1 configuration file
+# Generated for clean startup and full feature support
 
-# Global settings
-logging:
-  level: info
-  directory: logs
+# Main BGPalerter settings
+bgpalerter:
+  version: 2.0.1
+  environment: production
+  logging:
+    level: info
+    directory: /opt/bgpalerter/logs
 
+# Volume mount path (for logs, config, etc.)
 volume: /opt/bgpalerter
 
-# Monitors section must be an array
-monitors: []
+# Alerts configuration
+alerts:
+  email:
+    enabled: false
+    from: "bgpalerter@example.com"
+    to:
+      - "net-eng@example.com"
+    smtp:
+      host: "smtp.example.com"
+      port: 587
+      auth:
+        user: "user"
+        pass: "password"
+  slack:
+    enabled: false
+    webhook: "https://hooks.slack.com/services/TOKEN"
 
-# Static prefixes monitoring
+# Monitored prefixes and groups
 statics:
   enabled: true
   monitoredPrefixesFiles:
     - prefixes.yml
+  groupsFiles:
+    - groups.yml
 
-# RPKI validation
+# RPKI configuration
 rpki:
   enabled: true
-  files:
+  rpkiFiles:
     - rpki.yml
+  validationFrequency: 3600 # seconds
 
-# Subscribers / alerts
-subs:
+# Subscription alerts (optional)
+subscriptions:
   enabled: true
   files:
     - subs.yml
 
-# Optional: add more global settings here
+# Monitors
+monitors:
+  - type: BGPStream
+    enabled: true
+    peers:
+      - routeviews
+      - ris
+    collectors:
+      - route-views
+      - ris
 
+# Optional additional features
+features:
+  as-path-prepend-detection: true
+  origin-as-change-detection: true
+  large-prefix-detection: true
+  withdraw-detection: true
 
-# Optional settings
-otherSettings:
   refreshInterval: 300
+
 
