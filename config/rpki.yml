@@ -1,0 +1,5 @@
+rpki:
+  enabled: true
+  sources:
+    - name: ripe
+    - url: https??rpki-validator.net/api/export.json

@@ -1,0 +1,17 @@
+# Runtime / generated
+var/
+cache/
+logs/
+backup/
+*.log
+*.tmp
+
+# OS/editor
+.DS_Store
+*.swp
+*.swo
+
+# Secrets (do not commit)
+*.key
+*.pem
+*.p12

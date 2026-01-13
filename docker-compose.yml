@@ -1,0 +1,28 @@
+services:
+  bgpalerter:
+    image: nttgin/bgpalerter:latest
+    container_name: bgpalerter
+    restart: unless-stopped
+
+    # keep REST API local-only
+    ports:
+      - "127.0.0.1:8011:8011"
+
+    # IMPORTANT: mount your repaired configs and persistent runtime directories
+    volumes:
+      # main config expected at /opt/bgpalerter/config.yml
+      - ./config/config.yml:/opt/bgpalerter/config.yml:ro
+
+      # other referenced files
+      - ./config/prefixes.yml:/opt/bgpalerter/prefixes.yml:ro
+      - ./config/groups.yml:/opt/bgpalerter/groups.yml:ro
+
+      # optional (only if you actually use them in config later)
+      - ./config/irr.yml:/opt/bgpalerter/irr.yml:ro
+      - ./config/rpki.yml:/opt/bgpalerter/rpki.yml:ro
+      - ./config/subs.yml:/opt/bgpalerter/subs.yml:ro
+
+      # persistent state (optional but recommended)
+      - ./var/cache:/opt/bgpalerter/cache
+      - ./var/log:/opt/bgpalerter/logs
+      - ./var/alertdata:/opt/bgpalerter/alertdata
