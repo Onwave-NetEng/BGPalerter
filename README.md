@@ -21,22 +21,22 @@ Prefixes are defined in `config/prefixes.yml`. Groups/ASNs are defined in `confi
 .
 +-- docker-compose.yml
 +-- config/
-¦   +-- config.yml
-¦   +-- prefixes.yml
-¦   +-- groups.yml
-¦   +-- irr.yml
-¦   +-- rpki.yml
-¦   +-- subs.yml
+Â¦   +-- config.yml
+Â¦   +-- prefixes.yml
+Â¦   +-- groups.yml
+Â¦   +-- irr.yml
+Â¦   +-- rpki.yml
+Â¦   +-- subs.yml
 +-- scripts/
-¦   +-- 00_cleanup_layout.sh
-¦   +-- 01_fix_yamllint_style.sh
-¦   +-- 10_bgpalerter_diagnostics.sh
-¦   +-- 11_patch_config_paths_for_container.sh
-¦   +-- 12_fix_reportSyslog_block.sh
-¦   +-- 13_fix_params_indentation.sh
-¦   +-- 14_repair_reports_section.sh
-¦   +-- 30_pin_bgpalerter_image.sh
-¦   +-- 31_enable_monitorROAS.sh
+Â¦   +-- 00_cleanup_layout.sh
+Â¦   +-- 01_fix_yamllint_style.sh
+Â¦   +-- 10_bgpalerter_diagnostics.sh
+Â¦   +-- 11_patch_config_paths_for_container.sh
+Â¦   +-- 12_fix_reportSyslog_block.sh
+Â¦   +-- 13_fix_params_indentation.sh
+Â¦   +-- 14_repair_reports_section.sh
+Â¦   +-- 30_pin_bgpalerter_image.sh
+Â¦   +-- 31_enable_monitorROAS.sh
 +-- validate.sh
 +-- .yamllint
 +-- .gitignore
@@ -52,7 +52,6 @@ Required:
 
 Optional (for central logging / dashboards):
 - Filebeat on the BGPalerter host
-- Logstash + Elasticsearch + Kibana on ELK server
 
 Network:
 - Outbound to RIPE RIS Live: `ris-live.ripe.net` (ws/wss)
