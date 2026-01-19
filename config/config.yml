@@ -1,5 +1,6 @@
-# BGPalerter v2 Configuration File - Repaired for AS58173
-configVersion: 2
+# BGPalerter v3 Configuration File - AS58173
+---
+configVersion: 3
 environment: production
 
 # Data sources for BGP updates
@@ -7,9 +8,13 @@ connectors:
   - file: connectorRIS
     name: ris
     params:
-      url: ws://ris-live.ripe.net/v1/ws/
-      perMessageDeflate: true
+      blacklistSources:
+        - 123.0.0.1/24
+        - 3453
       carefulSubscription: true
+      url: wss://ris-live.ripe.net/v1/ws/?client=bgpalerter-AS58173
+      perMessageDeflate: true
+      authorizationHeader: null
       includeRaw: false
       subscription:
         type: UPDATE
@@ -56,6 +61,37 @@ monitors:
       thresholdMinPeers: 3
       checkUncovered: false
       checkDisappearing: false
+
+  - file: monitorPathNeighbors
+    channel: path
+    name: path-neighbors
+    params:
+      thresholdMinPeers: 3
+
+  - file: monitorROAS
+    channel: roa
+    name: rpki-diff
+    params:
+      enableDiffAlerts: true
+      enableExpirationAlerts: true
+      enableExpirationCheckTA: true
+      enableDeletedCheckTA: true
+      enableAdvancedRpkiStats: false
+      roaExpirationAlertHours: 2
+      checkOnlyASns: true
+      toleranceDeletedRoasTA:
+        ripe: 20
+        apnic: 20
+        arin: 20
+        lacnic: 20
+        afrinic: 50
+      toleranceExpiredRoasTA:
+        ripe: 20
+        apnic: 20
+        arin: 20
+        lacnic: 20
+        afrinic: 50
+
   - file: monitorPathNeighbors
     channel: path
     name: path-neighbors
@@ -72,6 +108,7 @@ reports:
       - path
       - misconfiguration
       - rpki
+      - roa
     params:
       persistAlertData: false
       alertDataDirectory: /opt/bgpalerter/alertdata/
@@ -84,15 +121,16 @@ reports:
       - path
       - misconfiguration
       - rpki
+      - roa
     params:
-      senderEmail: bgpalerter.com
+      senderEmail: bgpalerter@onwave.com
       smtp:
         host: onwave-com.mail.protection.outlook.com
         port: 25
         secure: false
       notifiedEmails:
         default:
-          - iain.murdoch.com
+          - iain.murdoch@onwave.com
 
   - file: reportSyslog
     channels:
@@ -102,17 +140,18 @@ reports:
       - path
       - misconfiguration
       - rpki
+      - roa
     params:
       host: 172.30.250.34
       port: 514
       transport: udp
       templates:
-        default: '++BGPalerter-3-: ||'
-        hijack: '++BGPalerter-5-: ||||||||'
-        newprefix: '++BGPalerter-4-: ||||||||'
-        visibility: '++BGPalerter-5-: ||||||'
-        misconfiguration: '++BGPalerter-3-: ||||'
-        rpki: '++BGPalerter-3-: |||||'
+        default: "++BGPalerter-3-${type}: ${summary}|${earliest}|${latest}"
+        hijack: "++BGPalerter-5-${type}: ${summary}|${prefix}|${description}|${asn}|${newprefix}|${neworigin}|${earliest}|${latest}|${peers}"
+        newprefix: "++BGPalerter-4-${type}: ${summary}|${prefix}|${description}|${asn}|${newprefix}|${neworigin}|${earliest}|${latest}|${peers}"
+        visibility: "++BGPalerter-5-${type}: ${summary}|${prefix}|${description}|${asn}|${earliest}|${latest}|${peers}"
+        misconfiguration: "++BGPalerter-3-${type}: ${summary}|${asn}|${prefix}|${earliest}|${latest}"
+									  
 
 monitoredPrefixesFiles:
   - /opt/bgpalerter/prefixes.yml
