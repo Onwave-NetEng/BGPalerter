@@ -1,0 +1,13 @@
+cat > monitors-library.txt <<'EOF'
+# BGPalerter Monitors Library
+# columns: file | channel | name | params
+
+monitorHijack | hijack | basic-hijack-detection | thresholdMinPeers=3
+monitorNewPrefix | newprefix | new-prefix-detection | thresholdMinPeers=3
+monitorVisibility | visibility | withdrawal-detection | thresholdMinPeers=15
+monitorPath | path | path-matching | thresholdMinPeers=1; matchASNs=[[58173,174],[58173,6762]]
+monitorAS | misconfiguration | asn-monitor | thresholdMinPeers=3; skipPrefixMatch=false
+monitorRPKI | rpki | rpki-monitor | thresholdMinPeers=3; checkUncovered=true; checkDisappearing=true
+monitorROAS | roa | rpki-diff | enableDiffAlerts=true; enableExpirationAlerts=true; enableExpirationCheckTA=true; enableDeletedCheckTA=true; enableAdvancedRpkiStats=true; roaExpirationAlertHours=48
+monitorPathNeighbors | path | path-neighbors | thresholdMinPeers=3
+EOF
